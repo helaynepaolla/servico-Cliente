@@ -1,0 +1,5 @@
+package com.autoatendimento.cliente.entity;
+
+public class Endereco {
+
+}

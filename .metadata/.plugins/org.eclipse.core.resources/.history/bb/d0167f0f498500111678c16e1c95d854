@@ -1,0 +1,5 @@
+package com.autoatendimento.cliente.controller;
+
+public class ClienteController {
+
+}

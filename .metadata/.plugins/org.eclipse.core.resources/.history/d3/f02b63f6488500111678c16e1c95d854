@@ -1,0 +1,5 @@
+package com.autoatendimento.cliente.repository;
+
+public interface ClienteRepository {
+
+}
