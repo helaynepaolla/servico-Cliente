@@ -2,6 +2,8 @@ package com.autoatendimento.cliente.dto;
 
 import org.springframework.beans.BeanUtils;
 import com.autoatendimento.cliente.entity.Cliente;
+import com.autoatendimento.cliente.entity.Endereco;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
@@ -11,22 +13,13 @@ public class ClienteCadastroDTO {
     @NotBlank private String cpfCnpj;
     private String telefone;
     private String email;
-    @Valid private EnderecoDTO endereco;
+    @Valid private Endereco endereco;
     
     // Dados de acesso
     @NotBlank private String login;
     @NotBlank private String senha;
 
-    // Converte DTO para Entidade
-    public Cliente paraEntidade() {
-        Cliente cliente = new Cliente();
-        BeanUtils.copyProperties(this, cliente);
-        if (endereco != null) {
-            cliente.setEndereco(endereco.paraEntidade());
-        }
-        return cliente;
-    }
-
+    
     // Getters e Setters
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -36,8 +29,8 @@ public class ClienteCadastroDTO {
     public void setTelefone(String telefone) { this.telefone = telefone; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public EnderecoDTO getEndereco() { return endereco; }
-    public void setEndereco(EnderecoDTO endereco) { this.endereco = endereco; }
+    public Endereco getEndereco() { return endereco; }
+    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
     public String getSenha() { return senha; }
