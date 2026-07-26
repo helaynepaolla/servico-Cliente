@@ -1,25 +1,35 @@
 package com.autoatendimento.cliente.controller;
 
-import com.autoatendimento.cliente.client.AuthFeignClient;
-import com.autoatendimento.cliente.dto.ClienteCadastroDTO;
-import com.autoatendimento.cliente.dto.ClienteComSenhaDTO;
-import com.autoatendimento.cliente.entity.Cliente;
-import com.autoatendimento.cliente.repository.ClienteRepository;
-import jakarta.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.autoatendimento.cliente.client.AuthFeignClient;
+import com.autoatendimento.cliente.dto.ClienteCadastroDTO;
+import com.autoatendimento.cliente.dto.NovoEnderecoDTO;
+import com.autoatendimento.cliente.entity.Cliente;
+import com.autoatendimento.cliente.repository.ClienteRepository;
+import com.autoatendimento.cliente.service.ClienteService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClienteController {
-
-    private final ClienteRepository repository;
+public class ClienteController { 
+	public ClienteService clienteService;
+	private final ClienteRepository repository;
     private final AuthFeignClient authClient;
     public ClienteController(ClienteRepository repository, AuthFeignClient authClient) { 
     	this.repository = repository; 
@@ -103,4 +113,11 @@ public class ClienteController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+    @PostMapping("/{id}/enderecos")
+    public ResponseEntity<Cliente> adicionarEndereco(@PathVariable Long id, @Valid @RequestBody NovoEnderecoDTO dto) {
+        Cliente clienteAtualizado = clienteService.adicionarEndereco(id, dto);
+        return ResponseEntity.ok(clienteAtualizado);
+    }
+
 }
